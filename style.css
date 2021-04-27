@@ -16,7 +16,13 @@
     line-height: 25px;
     border-radius: 4px;
   }
-  
+
+
+  /* #fiveDay {
+    position: relative;
+    top: 5px;
+    left: 205px;
+  } */
   /* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
   .header a.logo {
     font-size: 25px;
@@ -40,29 +46,30 @@
     float: right;
   }
 
-  .card {
+  /* .card {
       left: 300px;
-  }
+  } */
 
-  .list-group {
+  /* .list-group {
     padding: 0px;
-    width: 300px;
+    width: 200px;
     position: relative;
-    top: -195px;
-  }
+    top: -300px;
+  } */
   
-  input {
-      position: relative;
-      top: -215px;
-  }
-
-  .searchBtn {
+  /* input {
     position: relative;
-    top: -215px;
-    right: -3px;
-  }
+    top: -320px;
+    left: 10px;
+  } */
+
+  /* .searchBtn {
+    position: relative;
+    top: -320px;
+    left: 20px;
+  } */
   /* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
-  @media screen and (max-width: 500px) {
+  /* @media screen and (max-width: 500px) {
     .header a {
       float: none;
       display: block;
@@ -71,4 +78,6 @@
     .header-right {
       float: none;
     }
-  }
+  } */
+
+  
