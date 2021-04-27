@@ -6,10 +6,25 @@ var plusTwoDays = moment().add(2, "days").format("MMM Do YY")
 var plusThreeDays = moment().add(3, "days").format("MMM Do YY")
 var plusFourDays = moment().add(4, "days").format("MMM Do YY")
 var plusFiveDays = moment().add(5, "days").format("MMM Do YY")
+
+
+var searchArray = []
 $("button").on("click", function () {
     var searchCity = $("#search").val();
-    getWeatherByCity(searchCity)
+    getWeatherByCity(searchCity);
+    
+    searchArray.push(searchCity);
+    $(".search-history").append(searchArray);
+    localStorage.setItem("searchMarker", JSON.stringify(searchCity));
+    console.log(localStorage);
+    saveSearch();
 })
+
+function saveSearch() {
+   var savedCities = JSON.parse(localStorage.getItem("searchMarker"))||
+   searchArray.push(savedCities)
+}
+
 
 // var date = moment();
  function getWeatherByCity(city){
@@ -46,7 +61,7 @@ $("button").on("click", function () {
         oneCall(lat,lon);
     })
  }
-
+ 
 
  function oneCall(lat,lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
@@ -113,6 +128,7 @@ $("button").on("click", function () {
         
         
     })
+   
  } 
 
 
