@@ -12,17 +12,18 @@ var searchArray = []
 $("button").on("click", function () {
     var searchCity = $("#search").val();
     getWeatherByCity(searchCity);
-    
+    saveSearch(); // moved the save search here 
     searchArray.push(searchCity);
-    $(".search-history").append(searchArray);
-    localStorage.setItem("searchMarker", JSON.stringify(searchCity));
+    var li = $("<li>").text(searchCity);
+    $(".search-history").append(li);
+    localStorage.setItem("searchMarker", JSON.stringify(searchArray));
     console.log(localStorage);
-    saveSearch();
+    
 })
 
 function saveSearch() {
-   var savedCities = JSON.parse(localStorage.getItem("searchMarker"))||
-   searchArray.push(savedCities)
+   var savedCities = JSON.parse(localStorage.getItem("searchMarker"))|| []
+   searchArray === savedCities
 }
 
 
