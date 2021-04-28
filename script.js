@@ -1,4 +1,4 @@
-
+init();
 today = moment().format("MMM Do YY");
 var presentDate = today
 var plusOneDay = moment().add(1, "days").format("MMM Do YY");
@@ -9,21 +9,40 @@ var plusFiveDays = moment().add(5, "days").format("MMM Do YY")
 
 
 var searchArray = []
-$("button").on("click", function () {
+$("button").on("click", function (event) {
+    // hide the cards 
+    event.preventDefault()
     var searchCity = $("#search").val();
     getWeatherByCity(searchCity);
-    saveSearch(); // moved the save search here 
-    searchArray.push(searchCity);
-    var li = $("<li>").text(searchCity);
-    $(".search-history").append(li);
+    // moved the save search here 
+    if(!searchArray.includes(searchCity)){
+        searchArray.push(searchCity);
+        console.log(searchArray)
+    } 
+    
+    // var li = $("<li>").text(searchCity);
+    // $(".search-history").append(li);
     localStorage.setItem("searchMarker", JSON.stringify(searchArray));
     console.log(localStorage);
-    
+    saveSearch();
 })
 
 function saveSearch() {
    var savedCities = JSON.parse(localStorage.getItem("searchMarker"))|| []
-   searchArray === savedCities
+   searchArray = savedCities;
+   console.log(searchArray);
+   $(".search-history").empty();
+   for(var i=0; i<searchArray.length; i++){
+
+    var li = $("<li>").text(searchArray[i]);
+    $(".search-history").append(li);
+
+   }
+   if (savedCities !== null) {
+    searchArray = savedCities;
+  } else {
+    searchHistory = [];
+  }
 }
 
 
@@ -129,8 +148,10 @@ function saveSearch() {
         
         
     })
-   
- } 
+}
+function init() {
+    saveSearch();
+}
 
 
 
