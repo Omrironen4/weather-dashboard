@@ -97,6 +97,14 @@ function saveSearch() {
         $(".card0-text3").text(`UV Index: ${uvIndex0}`);
         $(".icon").attr("src",`http://openweathermap.org/img/wn/${icon0}.png`);
         
+        if (uvIndex0 <= 3) {
+            $(".card0-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex0 > 3 && uvIndex0<= 7) {
+            $(".card0-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card0-text3").removeClass("moderate light").addClass("severe");
+        }
+
+
         //card 1 (ONE DAY AFTER)
         var temp = data.daily[1].temp.day;
         var humidity = data.daily[1].humidity
@@ -109,6 +117,12 @@ function saveSearch() {
         $(".card1-text3").text(`UV Index: ${uvIndex1}`);
         $(".icon1").attr("src",`http://openweathermap.org/img/wn/${icon1}.png`)
 
+        if (uvIndex1 <= 3) {
+            $(".card1-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex1 > 3 && uvIndex1<= 7) {
+            $(".card1-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card1-text3").removeClass("moderate light").addClass("severe");
+        }
         //card 2 (TWO DAYS AFTER)
         var temp = data.daily[2].temp.day;
         var humidity = data.daily[2].humidity
@@ -121,6 +135,12 @@ function saveSearch() {
         $(".card2-text3").text(`UV Index: ${uvIndex2}`);
         $(".icon2").attr("src",`http://openweathermap.org/img/wn/${icon2}.png`)
 
+        if (uvIndex2 <= 3) {
+            $(".card2-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex2 > 3 && uvIndex2<= 7) {
+            $(".card2-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card2-text3").removeClass("moderate light").addClass("severe");
+        }
         //card 3 (THREE DAYS AFTER)
         var temp = data.daily[3].temp.day;
         var humidity = data.daily[3].humidity
@@ -132,6 +152,13 @@ function saveSearch() {
         $(".card3-text2").text(`Wind: ${wind} MPH`);
         $(".card3-text3").text(`UV Index: ${uvIndex3}`);
         $(".icon3").attr("src",`http://openweathermap.org/img/wn/${icon3}.png`)
+
+        if (uvIndex3 <= 3) {
+            $(".card3-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex3 > 3 && uvIndex3<= 7) {
+            $(".card3-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card3-text3").removeClass("moderate light").addClass("severe");
+        }
         //card 4 (FOUR DAYS AFTER)
         var temp = data.daily[4].temp.day;
         var humidity = data.daily[4].humidity
@@ -143,6 +170,13 @@ function saveSearch() {
         $(".card4-text2").text(`Wind: ${wind} MPH`);
         $(".card4-text3").text(`UV Index: ${uvIndex4}`);
         $(".icon4").attr("src",`http://openweathermap.org/img/wn/${icon4}.png`)
+
+        if (uvIndex4 <= 3) {
+            $(".card4-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex4 > 3 && uvIndex4<= 7) {
+            $(".card4-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card4-text3").removeClass("moderate light").addClass("severe");
+        }
          //card 5 (FIVE DAYS AFTER)
          var temp = data.daily[5].temp.day;
         var humidity = data.daily[5].humidity
@@ -154,6 +188,13 @@ function saveSearch() {
         $(".card5-text2").text(`Wind: ${wind} MPH`);
         $(".card5-text3").text(`UV Index: ${uvIndex5}`);
         $(".icon5").attr("src",`http://openweathermap.org/img/wn/${icon5}.png`)
+
+        if (uvIndex5 <= 3) {
+            $(".card5-text3").removeClass("moderate severe").addClass("light");
+        } else if (uvIndex5 > 3 && uvIndex5<= 7) {
+            $(".card5-text3").removeClass("light severe").addClass("moderate");        } else {
+                $(".card5-text3").removeClass("moderate light").addClass("severe");
+        }
     })
 }
 function init() {
