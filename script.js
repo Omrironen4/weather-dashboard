@@ -1,4 +1,6 @@
 init();
+var weatherContainer = $(".card-body");
+weatherContainer.hide();
 today = moment().format("MMM Do YY");
 var presentDate = today
 var plusOneDay = moment().add(1, "days").format("MMM Do YY");
@@ -11,7 +13,8 @@ var plusFiveDays = moment().add(5, "days").format("MMM Do YY")
 var searchArray = []
 $("button").on("click", function (event) {
     // hide the cards 
-    event.preventDefault()
+    weatherContainer.show();
+    event.preventDefault();
     var searchCity = $("#search").val();
     getWeatherByCity(searchCity);
     // moved the save search here 
