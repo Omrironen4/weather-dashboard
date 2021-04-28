@@ -94,27 +94,69 @@ function saveSearch() {
     }).then (function (data){
         console.log(data)
         var UV = data.current.uvi
-        if (UV < 4){
 
-        }
         $(".card0-text3").text(`UV Index: ${UV}`);
         var icon0 = data.daily[0].weather[0].icon
         $(".icon").attr("src",`http://openweathermap.org/img/wn/${icon0}.png`)
-        // if (UV<=3) {
-        //     UV.css("background-color", "green")
-        // } else if (UV>3 && UV<6) {
-        //     UV.css("background-color", "yellow")
-        // } else {
-        //     UV.css("background-color", "red")
-        // }
-        // add uv index to front end and build the 5 day cards
-
+       
         //card 1 (ONE DAY AFTER)
         var temp = data.daily[1].temp.day;
         var humidity = data.daily[1].humidity
         var wind = data.daily[1].wind_speed
         var uvIndex = data.daily[1].uvi
         var icon1 = data.daily[1].weather[0].icon
+        console.log(uvIndex)
+        // UV COLOR FOR CARDS
+        //CARD 0
+        if (uvIndex <= 3){
+            $(".card0-text3").addClass("uvColorLight");
+        } else if(uvIndex > 3 && uvIndex <= 7){
+            $(".card0-text3").addClass("uvColorModerate");
+        } else {
+            $(".card0-text3").addClass("uvColorSevere");
+        }
+        //CARD 1
+        if (uvIndex <= 3){
+            $(".card1-text3").addClass("uvColorLight");
+        } else if(uvIndex>3 && uvIndex<=7){
+            $(".card1-text3").addClass("uvColorModerate");
+        } else {
+            $(".card1-text3").addClass("uvColorSevere");
+        }
+
+        //CARD 2
+        if (uvIndex < 3){
+            $(".card2-text3").addClass("uvColorLight");
+        } else if(uvIndex > 3 && uvIndex < 7){
+            $(".card2-text3").addClass("uvColorModerate");
+        } else {
+            $(".card2-text3").addClass("uvColorSevere");
+        }
+        //CARD 3
+        if (uvIndex < 3){
+            $(".card3-text3").addClass("uvColorLight");
+        } else if(uvIndex > 3 && uvIndex < 7){
+            $(".card3-text3").addClass("uvColorModerate");
+        } else {
+            $(".card3-text3").addClass("uvColorSevere");
+        }
+        //CARD 4
+        if (uvIndex < 3){
+            $(".card4-text3").addClass("uvColorLight");
+        } else if(uvIndex > 3 && uvIndex < 7){
+            $(".card4-text3").addClass("uvColorModerate");
+        } else {
+            $(".card4-text3").addClass("uvColorSevere");
+        }
+        //CARD 5
+        if (uvIndex < 3){
+            $(".card5-text3").addClass("uvColorLight");
+        } else if(uvIndex > 3 && uvIndex < 7){
+            $(".card5-text3").addClass("uvColorModerate");
+        } else {
+            $(".card5-text3").addClass("uvColorSevere");
+        }
+        
         $(".icon1").attr("src",`http://openweathermap.org/img/wn/${icon1}.png`)
         $(".card1-text0").text(`Temperature: ${temp} °F`);
         $(".card1-text1").text(`Humidity: ${humidity} %`);
@@ -173,51 +215,3 @@ function init() {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // weather-functions.js
-
-// getWeatherDataByCity = function (city) {
-//     return fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
-//         .then(function (response) {
-//             return response.json();
-//         })
-//         .then(function (responseData) {
-
-//             var weatherDataObject = {
-//                 temprature: responseData.list[0].main.temp,
-//                 humidity: responseData.list[1].main.humidity,
-//                 windSpeed: responseData.list[0].wind.speed,
-//                 coordinates: responseData.city.coord
-//             }
-//             console.log(weatherDataObject)
-//             return weatherDataObject;
-//         })
-// }
-
-// getWeatherDataByCity("Irvine").then(function () {
-//     console.log(weatherDataObject)
-// })
-
-
-
-// fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
-//     .then(function (data) {
-//         return data.json();
-//     })
-//     .then(function (data) {
-//         console.log(data);
-//     })
