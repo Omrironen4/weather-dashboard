@@ -50,7 +50,8 @@ function saveSearch() {
     searchHistory = [];
   }
 }
-// this function is running with the search city input value inserted in line 22
+
+//FIRST API CALL TO GET CITY COORDINATES
  function getWeatherByCity(city){
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
     .then(function (res) {
@@ -76,7 +77,7 @@ function saveSearch() {
     })
  }
  
-
+//SECOND API CALL TO GET UV INDEX USING COORDINATES 
  function oneCall(lat,lon) {
     fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
     .then(function (res){
