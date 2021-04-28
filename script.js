@@ -1,40 +1,43 @@
+// init function runs, which calls the saveSearch function
 init();
-var weatherContainer = $(".card-body");
-weatherContainer.hide();
-today = moment().format("MMM Do YY");
-var presentDate = today
-var plusOneDay = moment().add(1, "days").format("MMM Do YY");
+var weatherContainer = $(".card-body"); // used to hide the card containers, mainly for the looks of the page before the search
+weatherContainer.hide(); //hiding the card containers
+today = moment().format("MMM Do YY"); // shows the current date
+var presentDate = today 
+//adding days to current day .. 
+var plusOneDay = moment().add(1, "days").format("MMM Do YY"); 
 var plusTwoDays = moment().add(2, "days").format("MMM Do YY")
 var plusThreeDays = moment().add(3, "days").format("MMM Do YY")
 var plusFourDays = moment().add(4, "days").format("MMM Do YY")
 var plusFiveDays = moment().add(5, "days").format("MMM Do YY")
 
 
-var searchArray = []
+var searchArray = [] // array that stores searched cities
 $("button").on("click", function (event) {
-    // hide the cards 
-    weatherContainer.show();
-    event.preventDefault();
-    var searchCity = $("#search").val();
-    getWeatherByCity(searchCity);
-    // moved the save search here 
-    if(!searchArray.includes(searchCity)){
+    weatherContainer.show(); // showing the card containers
+    event.preventDefault(); // preventing a refresh on button click
+    var searchCity = $("#search").val(); // input value from search
+    getWeatherByCity(searchCity); // calling function with input value
+    
+    if(!searchArray.includes(searchCity)){ // if the search input is not inside the search array (previous searches), then we will add value to array on click. This eliminates duplicates
         searchArray.push(searchCity);
         console.log(searchArray)
     } 
     
-    // var li = $("<li>").text(searchCity);
-    // $(".search-history").append(li);
+// setting the local storage with search array on click 
     localStorage.setItem("searchMarker", JSON.stringify(searchArray));
     console.log(localStorage);
-    saveSearch();
+    saveSearch(); // running the saveSearch function on click 
 })
 
+// this function saves our searches in the search array 
 function saveSearch() {
    var savedCities = JSON.parse(localStorage.getItem("searchMarker"))|| []
-   searchArray = savedCities;
+   searchArray = savedCities; // making the array equal the saved cities (our local storage array)
    console.log(searchArray);
-   $(".search-history").empty();
+   $(".search-history").empty(); //here we empty the div after click, this prevents having multiple of the same cities in the history 
+
+   // makes an li for every search array, and appends to the search history 
    for(var i=0; i<searchArray.length; i++){
 
     var li = $("<li>").text(searchArray[i]);
@@ -47,9 +50,7 @@ function saveSearch() {
     searchHistory = [];
   }
 }
-
-
-// var date = moment();
+// this function is running with the search city input value inserted in line 22
  function getWeatherByCity(city){
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=2f13e6ddf4fe6dc7bcf87d5d56fa266c`)
     .then(function (res) {
@@ -61,20 +62,9 @@ function saveSearch() {
         var humidity = data.list[1].main.humidity
         var wind = data.list[0].wind.speed
         var cityName = data.city.name
-        // var icon = data.cod.
-        // console.log('temp', data.list[0].main.temp);
-        // console.log('humidity', data.list[1].main.humidity);
-        // console.log('speed', data.list[0].wind.speed);
-        // console.log('coords', data.city.coord);
-        // put all weather data into the card
         
-        //card 0 (CURRENT DAY)
-        $(".card0-title").text(`City: ${cityName} (${presentDate})`);
-        $
-        $(".card0-text0").text(`Temperature: ${temp} °F`);
-        $(".card0-text1").text(`Humidity: ${humidity} %`);
-        $(".card0-text2").text(`Wind: ${wind} MPH`);
         // card titles & date for 5 day forcast
+        $(".card0-title").text(`City: ${cityName} (${presentDate})`);
         $(".card1-title").text(`City: ${cityName} (${plusOneDay})`);
         $(".card2-title").text(`City: ${cityName} (${plusTwoDays})`);
         $(".card3-title").text(`City: ${cityName} (${plusThreeDays})`);
@@ -82,7 +72,7 @@ function saveSearch() {
         $(".card5-title").text(`City: ${cityName} (${plusFiveDays})`);
         var lat = data.city.coord.lat;
         var lon = data.city.coord.lon;
-        oneCall(lat,lon);
+        oneCall(lat,lon); // using lat and lon data for next api call
     })
  }
  
@@ -93,121 +83,76 @@ function saveSearch() {
         return res.json();
     }).then (function (data){
         console.log(data)
-        var UV = data.current.uvi
 
-        $(".card0-text3").text(`UV Index: ${UV}`);
+        //CARD 0 (CURRENT DAY)
+        var temp = data.daily[0].temp.day;
+        var humidity = data.daily[0].humidity
+        var wind = data.daily[0].wind_speed
+        var uvIndex0 = data.current.uvi
         var icon0 = data.daily[0].weather[0].icon
-        $(".icon").attr("src",`http://openweathermap.org/img/wn/${icon0}.png`)
-       
+        $(".card0-text0").text(`Temperature: ${temp} °F`);
+        $(".card0-text1").text(`Humidity: ${humidity} %`);
+        $(".card0-text2").text(`Wind: ${wind} MPH`);
+        $(".card0-text3").text(`UV Index: ${uvIndex0}`);
+        $(".icon").attr("src",`http://openweathermap.org/img/wn/${icon0}.png`);
+        
         //card 1 (ONE DAY AFTER)
         var temp = data.daily[1].temp.day;
         var humidity = data.daily[1].humidity
         var wind = data.daily[1].wind_speed
-        var uvIndex = data.daily[1].uvi
+        var uvIndex1 = data.daily[1].uvi
         var icon1 = data.daily[1].weather[0].icon
-        console.log(uvIndex)
-        // UV COLOR FOR CARDS
-        //CARD 0
-        if (uvIndex <= 3){
-            $(".card0-text3").addClass("uvColorLight");
-        } else if(uvIndex > 3 && uvIndex <= 7){
-            $(".card0-text3").addClass("uvColorModerate");
-        } else {
-            $(".card0-text3").addClass("uvColorSevere");
-        }
-        //CARD 1
-        if (uvIndex <= 3){
-            $(".card1-text3").addClass("uvColorLight");
-        } else if(uvIndex>3 && uvIndex<=7){
-            $(".card1-text3").addClass("uvColorModerate");
-        } else {
-            $(".card1-text3").addClass("uvColorSevere");
-        }
-
-        //CARD 2
-        if (uvIndex < 3){
-            $(".card2-text3").addClass("uvColorLight");
-        } else if(uvIndex > 3 && uvIndex < 7){
-            $(".card2-text3").addClass("uvColorModerate");
-        } else {
-            $(".card2-text3").addClass("uvColorSevere");
-        }
-        //CARD 3
-        if (uvIndex < 3){
-            $(".card3-text3").addClass("uvColorLight");
-        } else if(uvIndex > 3 && uvIndex < 7){
-            $(".card3-text3").addClass("uvColorModerate");
-        } else {
-            $(".card3-text3").addClass("uvColorSevere");
-        }
-        //CARD 4
-        if (uvIndex < 3){
-            $(".card4-text3").addClass("uvColorLight");
-        } else if(uvIndex > 3 && uvIndex < 7){
-            $(".card4-text3").addClass("uvColorModerate");
-        } else {
-            $(".card4-text3").addClass("uvColorSevere");
-        }
-        //CARD 5
-        if (uvIndex < 3){
-            $(".card5-text3").addClass("uvColorLight");
-        } else if(uvIndex > 3 && uvIndex < 7){
-            $(".card5-text3").addClass("uvColorModerate");
-        } else {
-            $(".card5-text3").addClass("uvColorSevere");
-        }
-        
-        $(".icon1").attr("src",`http://openweathermap.org/img/wn/${icon1}.png`)
         $(".card1-text0").text(`Temperature: ${temp} °F`);
         $(".card1-text1").text(`Humidity: ${humidity} %`);
         $(".card1-text2").text(`Wind: ${wind} MPH`);
-        $(".card1-text3").text(`UV Index: ${uvIndex}`);
+        $(".card1-text3").text(`UV Index: ${uvIndex1}`);
+        $(".icon1").attr("src",`http://openweathermap.org/img/wn/${icon1}.png`)
+
         //card 2 (TWO DAYS AFTER)
         var temp = data.daily[2].temp.day;
         var humidity = data.daily[2].humidity
         var wind = data.daily[2].wind_speed
-        var uvIndex = data.daily[2].uvi
+        var uvIndex2 = data.daily[2].uvi
         var icon2 = data.daily[1].weather[0].icon
-        $(".icon2").attr("src",`http://openweathermap.org/img/wn/${icon2}.png`)
         $(".card2-text0").text(`Temperature: ${temp} °F`);
         $(".card2-text1").text(`Humidity: ${humidity} %`);
         $(".card2-text2").text(`Wind: ${wind} MPH`);
-        $(".card2-text3").text(`UV Index: ${uvIndex}`);
+        $(".card2-text3").text(`UV Index: ${uvIndex2}`);
+        $(".icon2").attr("src",`http://openweathermap.org/img/wn/${icon2}.png`)
+
         //card 3 (THREE DAYS AFTER)
         var temp = data.daily[3].temp.day;
         var humidity = data.daily[3].humidity
         var wind = data.daily[3].wind_speed
-        var uvIndex = data.daily[3].uvi
+        var uvIndex3 = data.daily[3].uvi
         var icon3 = data.daily[2].weather[0].icon
-        $(".icon3").attr("src",`http://openweathermap.org/img/wn/${icon3}.png`)
         $(".card3-text0").text(`Temperature: ${temp} °F`);
         $(".card3-text1").text(`Humidity: ${humidity} %`);
         $(".card3-text2").text(`Wind: ${wind} MPH`);
-        $(".card3-text3").text(`UV Index: ${uvIndex}`);
+        $(".card3-text3").text(`UV Index: ${uvIndex3}`);
+        $(".icon3").attr("src",`http://openweathermap.org/img/wn/${icon3}.png`)
         //card 4 (FOUR DAYS AFTER)
         var temp = data.daily[4].temp.day;
         var humidity = data.daily[4].humidity
         var wind = data.daily[4].wind_speed
-        var uvIndex = data.daily[4].uvi
+        var uvIndex4 = data.daily[4].uvi
         var icon4 = data.daily[3].weather[0].icon
-        $(".icon4").attr("src",`http://openweathermap.org/img/wn/${icon4}.png`)
         $(".card4-text0").text(`Temperature: ${temp} °F`);
         $(".card4-text1").text(`Humidity: ${humidity} %`);
         $(".card4-text2").text(`Wind: ${wind} MPH`);
-        $(".card4-text3").text(`UV Index: ${uvIndex}`);
+        $(".card4-text3").text(`UV Index: ${uvIndex4}`);
+        $(".icon4").attr("src",`http://openweathermap.org/img/wn/${icon4}.png`)
          //card 5 (FIVE DAYS AFTER)
          var temp = data.daily[5].temp.day;
         var humidity = data.daily[5].humidity
         var wind = data.daily[5].wind_speed
-        var uvIndex = data.daily[5].uvi
+        var uvIndex5 = data.daily[5].uvi
         var icon5 = data.daily[4].weather[0].icon
-        $(".icon5").attr("src",`http://openweathermap.org/img/wn/${icon5}.png`)
         $(".card5-text0").text(`Temperature: ${temp} °F`);
         $(".card5-text1").text(`Humidity: ${humidity} %`);
         $(".card5-text2").text(`Wind: ${wind} MPH`);
-        $(".card5-text3").text(`UV Index: ${uvIndex}`);
-        
-        
+        $(".card5-text3").text(`UV Index: ${uvIndex5}`);
+        $(".icon5").attr("src",`http://openweathermap.org/img/wn/${icon5}.png`)
     })
 }
 function init() {
