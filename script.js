@@ -67,6 +67,7 @@ function saveSearch() {
         
         //card 0 (CURRENT DAY)
         $(".card0-title").text(`City: ${cityName} (${presentDate})`);
+        $
         $(".card0-text0").text(`Temperature: ${temp} °F`);
         $(".card0-text1").text(`Humidity: ${humidity} %`);
         $(".card0-text2").text(`Wind: ${wind} MPH`);
@@ -90,7 +91,12 @@ function saveSearch() {
     }).then (function (data){
         console.log(data)
         var UV = data.current.uvi
+        if (UV < 4){
+
+        }
         $(".card0-text3").text(`UV Index: ${UV}`);
+        var icon0 = data.daily[0].weather[0].icon
+        $(".icon").attr("src",`http://openweathermap.org/img/wn/${icon0}.png`)
         // if (UV<=3) {
         //     UV.css("background-color", "green")
         // } else if (UV>3 && UV<6) {
@@ -105,6 +111,8 @@ function saveSearch() {
         var humidity = data.daily[1].humidity
         var wind = data.daily[1].wind_speed
         var uvIndex = data.daily[1].uvi
+        var icon1 = data.daily[1].weather[0].icon
+        $(".icon1").attr("src",`http://openweathermap.org/img/wn/${icon1}.png`)
         $(".card1-text0").text(`Temperature: ${temp} °F`);
         $(".card1-text1").text(`Humidity: ${humidity} %`);
         $(".card1-text2").text(`Wind: ${wind} MPH`);
@@ -114,6 +122,8 @@ function saveSearch() {
         var humidity = data.daily[2].humidity
         var wind = data.daily[2].wind_speed
         var uvIndex = data.daily[2].uvi
+        var icon2 = data.daily[1].weather[0].icon
+        $(".icon2").attr("src",`http://openweathermap.org/img/wn/${icon2}.png`)
         $(".card2-text0").text(`Temperature: ${temp} °F`);
         $(".card2-text1").text(`Humidity: ${humidity} %`);
         $(".card2-text2").text(`Wind: ${wind} MPH`);
@@ -123,6 +133,8 @@ function saveSearch() {
         var humidity = data.daily[3].humidity
         var wind = data.daily[3].wind_speed
         var uvIndex = data.daily[3].uvi
+        var icon3 = data.daily[2].weather[0].icon
+        $(".icon3").attr("src",`http://openweathermap.org/img/wn/${icon3}.png`)
         $(".card3-text0").text(`Temperature: ${temp} °F`);
         $(".card3-text1").text(`Humidity: ${humidity} %`);
         $(".card3-text2").text(`Wind: ${wind} MPH`);
@@ -132,6 +144,8 @@ function saveSearch() {
         var humidity = data.daily[4].humidity
         var wind = data.daily[4].wind_speed
         var uvIndex = data.daily[4].uvi
+        var icon4 = data.daily[3].weather[0].icon
+        $(".icon4").attr("src",`http://openweathermap.org/img/wn/${icon4}.png`)
         $(".card4-text0").text(`Temperature: ${temp} °F`);
         $(".card4-text1").text(`Humidity: ${humidity} %`);
         $(".card4-text2").text(`Wind: ${wind} MPH`);
@@ -141,6 +155,8 @@ function saveSearch() {
         var humidity = data.daily[5].humidity
         var wind = data.daily[5].wind_speed
         var uvIndex = data.daily[5].uvi
+        var icon5 = data.daily[4].weather[0].icon
+        $(".icon5").attr("src",`http://openweathermap.org/img/wn/${icon5}.png`)
         $(".card5-text0").text(`Temperature: ${temp} °F`);
         $(".card5-text1").text(`Humidity: ${humidity} %`);
         $(".card5-text2").text(`Wind: ${wind} MPH`);
